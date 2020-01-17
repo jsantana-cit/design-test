@@ -51,7 +51,8 @@ const eachDirectory = (folder, pathAddress) => {
       const directories = files.filter(el => /^[^.]+$/.test(el));
 
       if(pngFiles.length > 0) {
-        console.log(pathAddress.concat(dir, ':').trim());
+        console.log(pathAddress.concat(
+          (pathAddress.length > 0) ? ' - ' : '', dir, ':').trim());
 
         verifyDiff(pngFiles, folder, pathAddress, dir);
 
