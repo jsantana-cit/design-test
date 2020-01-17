@@ -12,6 +12,6 @@ Desenvolvemos um script para percorrer todos os arquivos PNG de um diretório, p
 
 Após ter o script na maquina, deve extrair as imagens do épico ou dos componentes, deve ter o mesmo nome, uma versão aprovada ficara na pasta img_approved e as extraidas para teste na img_current, o script vai percorrer as imagens da current e procurar a mesma, com o mesmo nome na pasta de aprovadas e validar se algo esta diferente entre elas, caso esteja sem nenhuma divergencia é listado no console como o nome do arquivo e a palavra ‘perfeito’, caso contrario com a palavra ‘errado’ e ira gerar uma imagem com essa diferença a salvo na pasta img_reproved.
 
-<img src="https://github.com/jsantana-cit/design-test/raw/master/img_readme/diff-Busca responsivo.png">
+<img src="https://github.com/jsantana-cit/design-test/raw/master/img_readme/diff-busca-responsivo.png">
 
 Acima uma imagem gerada com a diferença, esse exemplo uma imagem aprovada continha o ícone de lupa e a imagem atual estava sem a lupa. Toda a imagem fica desfocada, em tons de cinza e apenas é evidenciado a diferença.
