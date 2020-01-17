@@ -19,52 +19,47 @@ const getDirectory = {
   directoryPathReproved: path.join(__dirname, dirReproved),
 }
 
-const getSubDirectories = (path) => {
-  return fs.readdirSync(path).filter(function (file) {
-    return fs.statSync(path + '/' + file).isDirectory();
+const getSubDirectories = (folder, pathAddress) => {
+  let address = path.join(folder, pathAddress);
+  return fs.readdirSync(address).filter(function (file) {
+    return fs.statSync(address + '/' + file).isDirectory();
   });
 }
 
-const verifyDiff = (pngFiles, dir) => {
+const verifyDiff = (pngFiles, folder, pathAddress, dir) => {
   pngFiles.forEach(function (file) {
-    const imgCurrent = PNG.sync.read(
-      fs.readFileSync(path.join(dir, file)));
-    const imgApproved = PNG.sync.read(
-      fs.readFileSync(path.join(dir, file)));
+    const imgCurrent = PNG.sync.read(fs.readFileSync(path.join(folder, pathAddress, dir, file)));
+    const imgApproved = PNG.sync.read(fs.readFileSync(path.join(getDirectory.directoryPathApproved, pathAddress, dir, file)));
     const {width, height} = imgCurrent;
     const diff = new PNG({width, height});
 
     let qtdDiff = pixelmatch(imgCurrent.data, imgApproved.data, diff.data, width, height, {threshold:0});
     if(qtdDiff > 0) {
       console.log('NOK'.red, ' - '.red, file.red);
-      fs.writeFileSync(path.join(getDirectory.directoryPathApproved, 'diff-' + file), PNG.sync.write(diff));
+      fs.writeFileSync(path.join(getDirectory.directoryPathReproved, 'diff-' + file), PNG.sync.write(diff));
     } else {
       console.log(' OK'.blue, ' - ', file);
     }
   });
 }
 
-const eachDirectory = (pathForEach) => {
-  getSubDirectories(pathForEach).forEach(function(dir) {
-    fs.readdir(path.join(pathForEach, dir), function (err, files) {
-      let pngFiles = files.filter(el => /\.png$/.test(el));
-      let directories = files.filter(el => /^[^.]+$/.test(el));
+const eachDirectory = (folder, pathAddress) => {
+  getSubDirectories(folder, pathAddress).forEach(function(dir) {
+    const address = path.join(folder, pathAddress, dir);
+    fs.readdir(address, function (err, files) {
+      const pngFiles = files.filter(el => /\.png$/.test(el));
+      const directories = files.filter(el => /^[^.]+$/.test(el));
 
       if(pngFiles.length > 0) {
-        let splitCaminho = path.join(pathForEach, dir).split('/');
-        console.log(
-          splitCaminho[splitCaminho.length-2] + '/' +
-          splitCaminho[splitCaminho.length-1] + ':'
-        );
+        console.log(pathAddress.concat(dir, ':').trim());
 
-        verifyDiff(pngFiles, path.join(pathForEach, dir));
+        verifyDiff(pngFiles, folder, pathAddress, dir);
 
         console.log('\n\n');
       }
 
       for (var prop in directories) {
-        let kk = path.join(pathForEach, dir, directories[prop]);
-        eachDirectory(kk);
+        eachDirectory(folder, path.join(pathAddress, dir, directories[prop]));
       }
     });
   });
