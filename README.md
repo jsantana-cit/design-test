@@ -2,6 +2,13 @@
 
 <img src="https://github.com/jsantana-cit/design-test/raw/master/img_readme/logo.png">
 
+---
+
+**Componentes (Symbols) + Testes**
+Qualidade e menos divergências nas telas já validadas! 
+
+---
+
 Quando estamos mantendo componentes em design (Símbolos do Sketch) precisamos garantir que todas as telas já desenvolvidas não sofram impacto de forma alguma, foi essa dor que motivou a implementação de testes via comparação de imagem. Os testes nas implementações de componentes e também das telas irá levar uma maior confiança para evolução e manutenção, pois teremos um feedback rápido e automático caso haja alguma divergência em uma tela já aprovada para o time de desenvolvimento, ou até mesmo algum elemento acidentalmente deslocado da localização original ou algo estiver com a cor diferente da versão aprovada, assim teremos um alerta rápido dessas divergencias e também a oportunidade de corrigir sem que isso vá para o time de deselvolvimento.
 
 <img src="https://github.com/jsantana-cit/design-test/raw/master/img_readme/diretorios.png">
